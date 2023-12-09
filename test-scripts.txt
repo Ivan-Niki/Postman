@@ -126,6 +126,11 @@ pm.test("Successful POST request", () => {
 });
 
 
+Проверка текста кода состояния
+pm.test("Status code name has string", () => {
+  pm.response.to.have.status("Created");
+});
+
 
 
 
