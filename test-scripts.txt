@@ -98,6 +98,22 @@ console.log($.html());
 	});
 
 
+------------ Проверка тела ответа ------------
+Мы можем проверить конкретные значения в теле ответа:
+
+/* Ответ имеет следующую структуру:
+{
+  "name": "Jane",
+  "age": 23
+},
+*/
+pm.test("Person is Jane", () => {
+  const responseJson = pm.response.json();
+  pm.expect(responseJson.name).to.eql("Jane");
+  pm.expect(responseJson.age).to.eql(23);
+});
+
+
 
 
 
