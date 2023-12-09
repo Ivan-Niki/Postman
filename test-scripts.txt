@@ -158,6 +158,16 @@ pm.test("Cookie isLoggedIn has value 1", () => {
 
 
 
+----- Тест (проверка), что время ответа находится в заданном диапазоне -----
+pm.test("Response time is less than 200ms", () => {
+  pm.expect(pm.response.responseTime).to.be.below(200);
+});
+
+
+
+
+
+
 
 Language Chains
 The following are provided as chainable getters to improve the readability of your assertions.
