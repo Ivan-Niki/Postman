@@ -62,6 +62,16 @@ expect(new Float32Array).to.be.a('float32array');
 expect(Symbol()).to.be.a('symbol');
 
 
+Парсинг (анализ) данных тела ответа
+Чтобы выполнить тестовые утверждения на ваши ответы, сначала вам нужно будет разобрать данные в объект JavaScript, который ваши утверждения могут использовать.
+Для анализа (парсинга) данных JSON используйте следующий синтаксис:
+const responseJson = pm.response.json();
+
+
+
+
+
+
 Language Chains
 The following are provided as chainable getters to improve the readability of your assertions.
 
