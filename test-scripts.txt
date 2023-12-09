@@ -62,12 +62,18 @@ expect(new Float32Array).to.be.a('float32array');
 expect(Symbol()).to.be.a('symbol');
 
 
-Парсинг (анализ) данных тела ответа
+============== Парсинг (анализ) данных тела ответа ==============
 Чтобы выполнить тестовые утверждения на ваши ответы, сначала вам нужно будет разобрать данные в объект JavaScript, который ваши утверждения могут использовать.
+
 Для анализа (парсинга) данных JSON используйте следующий синтаксис:
-const responseJson = pm.response.json();
+--> const responseJson = pm.response.json();
 
+Для разбора XML используйте следующий синтаксис:
+--> const responseJson = xml2Json(pm.response.text());
 
+Для разбора CSV используйте утилиту CSV-разбора (csv-parse/lib/sync):
+const parse = require('csv-parse/lib/sync');
+const responseJson = parse(pm.response.text());
 
 
 
