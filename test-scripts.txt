@@ -164,6 +164,15 @@ pm.test("Response time is less than 200ms", () => {
 });
 
 
+============= Примеры распространённых утверждений ==============
+Мы можем проверить, имеет ли свойство ответа то же значение, что и переменная (в этом примере используется переменная среды):
+pm.test("Response property matches environment variable", function () {
+  pm.expect(pm.response.json().name).to.eql(pm.environment.get("name"));
+});
+
+
+
+
 
 
 
