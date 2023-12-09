@@ -119,6 +119,12 @@ pm.test("Status code is 201", () => {
   pm.response.to.have.status(201);
 });
 
+Если вы хотите проверить, что код состояния является одним из множества, 
+включите их все в массив и используйте oneOf:
+pm.test("Successful POST request", () => {
+  pm.expect(pm.response.code).to.be.oneOf([201,202]);
+});
+
 
 
 
