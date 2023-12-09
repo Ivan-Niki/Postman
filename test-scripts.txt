@@ -114,6 +114,17 @@ pm.test("Person is Jane", () => {
 });
 
 
+---------- Проверка для кода состояния ответа ----------
+pm.test("Status code is 201", () => {
+  pm.response.to.have.status(201);
+});
+
+
+
+
+
+
+
 
 
 
