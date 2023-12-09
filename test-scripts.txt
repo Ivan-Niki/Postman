@@ -75,6 +75,11 @@ expect(Symbol()).to.be.a('symbol');
 const parse = require('csv-parse/lib/sync');
 const responseJson = parse(pm.response.text());
 
+Для разбора HTML используйте cheerio:
+const $ = cheerio.load(pm.response.text());
+//output the html for testing
+console.log($.html());
+
 
 
 
