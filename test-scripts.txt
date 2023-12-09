@@ -132,6 +132,12 @@ pm.test("Status code name has string", () => {
 });
 
 
+-------------- Проверка наличия заголовка (хэдера) ответа -------------
+pm.test("Content-Type header is present", () => {
+  pm.response.to.have.header("Content-Type");
+});
+
+
 
 
 
