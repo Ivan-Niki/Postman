@@ -24,6 +24,17 @@ pm.test("Status code is 200", function () {
 
 Попробуйте изменить код состояния в коде утверждения и запустить его снова, чтобы увидеть, как результаты теста выглядят по-разному, когда они проходят или не проходят.
 
+Вы можете строить свои тестовые утверждения (выражения) разными способами, в зависимости от того, 
+как вы хотите, чтобы выводились результаты.
+Следующий код является альтернативным способом достижения того же теста, что и выше, с использованием ожидаемого синтаксиса:
+
+pm.test("Status code is 200", () => {
+  pm.expect(pm.response.code).to.eql(200);
+});
+
+
+
+
 
 ------------ Использование нескольких утверждений ------------
 Ваши тесты могут включать несколько утверждений как часть одного теста, вы можете использовать это для группировки связанных утверждений.
@@ -39,3 +50,44 @@ pm.test("The response has all properties", () => {
 Если какое-либо из содержащихся утверждений завершится неудачно, тест в целом завершится неудачно. Все утверждения должны быть успешными, чтобы тест прошел успешно.
 
 
+Either pm.response.json() for JSON or pm.response.text() if you need just the raw plain text.
+
+expect('foo').to.be.a('string');
+expect({a: 1}).to.be.an('object');
+expect(null).to.be.a('null');
+expect(undefined).to.be.an('undefined');
+expect(new Error).to.be.an('error');
+expect(Promise.resolve()).to.be.a('promise');
+expect(new Float32Array).to.be.a('float32array');
+expect(Symbol()).to.be.a('symbol');
+
+
+Language Chains
+The following are provided as chainable getters to improve the readability of your assertions.
+
+Chains
+
+to
+be
+been
+is
+that
+which
+and
+has
+have
+with
+at
+of
+same
+but
+does
+still
+also
+.not
+Negates all assertions that follow in the chain.
+
+expect(function () {}).to.not.throw();
+expect({a: 1}).to.not.have.property('b');
+expect([1, 2]).to.be.an('array').that.does.not.include(3);
+Just because you can negate any assertion with .not doesn’t mean you should. With great power comes great responsibility. It’s often best to assert that the one expected output was produced, rather than asserting that one of countless unexpected outputs wasn’t produced. See individual assertions for specific guidance.
