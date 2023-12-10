@@ -216,7 +216,7 @@ pm.expect({a: 1, b: 2}).to.be.an('object')
 Поскольку поведение .keys варьируется в зависимости от типа данных цели, рекомендуется проверять тип перед использованием .keys с .a;
 
 
------- Сверка значения ответа со списком допустимых параметров ------
+-------- Сверка значения ответа со списком допустимых параметров --------
 /* Response has the following structure:
 {
   "type": "Subscriber"
@@ -226,6 +226,25 @@ pm.expect({a: 1, b: 2}).to.be.an('object')
 pm.test("Value is in valid list", () => {
   pm.expect(pm.response.json().type)
     .to.be.oneOf(["Subscriber", "Customer", "User"]);
+});
+
+
+
+------- Проверка, что объект является частью родительского объекта -------
+/* Response has the following structure:
+{
+  "id": "d8893057-3e91-4cdd-a36f-a0af460b6373",
+  "created": true,
+  "errors": []
+},
+*/
+
+pm.test("Object is contained", () => {
+  const expectedObject = {
+    "created": true,
+    "errors": []
+  };
+  pm.expect(pm.response.json()).to.deep.include(expectedObject);
 });
 
 
