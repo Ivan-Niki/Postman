@@ -211,6 +211,22 @@ pm.expect({a: 1}).to.have.property('a');
 pm.expect({a: 1, b: 2}).to.be.an('object')
   .that.has.all.keys('a', 'b');
 
+Целью может быть объект, набор, массив или карта. Если .keys выполняются без .all или .any, 
+значение по умолчанию равно .all;
+Поскольку поведение .keys варьируется в зависимости от типа данных цели, рекомендуется проверять тип перед использованием .keys с .a;
+
+
+------ Сверка значения ответа со списком допустимых параметров ------
+/* Response has the following structure:
+{
+  "type": "Subscriber"
+},
+*/
+
+pm.test("Value is in valid list", () => {
+  pm.expect(pm.response.json().type)
+    .to.be.oneOf(["Subscriber", "Customer", "User"]);
+});
 
 
 
