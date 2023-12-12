@@ -143,6 +143,7 @@ pm.test("check dog-age to be 4", () => {
 4. GET   baseURL/object_info_4
 
 // 1. Отправить запрос.
+
 // 2. Статус код 200
 pm.test("status is 200", () => {
     pm.response.to.have.status(200);
@@ -156,13 +157,43 @@ let respJson = pm.response.json();
 let reqJson = pm.request.url.query.toObject();
 // console.log(reqJson);
 
-//5. Проверить, что name в ответе равно name s request (name забрать из request.)
+// 5. Проверить, что name в ответе равно name s request (name забрать из request.)
 pm.test("Check resp-name matches to req-name", function () {
     pm.expect(respJson.name).to.eql(reqJson.name);
 });
 
-//6. Проверить, что age в ответе равно age из request (age забрать из request.)
+// 6. Проверить, что age в ответе равно age из request (age забрать из request.)
 pm.test("Check resp-age matches to req-age", function () {
     pm.expect(respJson.age).to.eql(Number(reqJson.age));
+});
+
+// 7. Вывести в консоль параметр salary из request.
+console.log(reqJson.salary);
+
+// 8. Вывести в консоль параметр salary из response.
+console.log(respJson.salary);
+
+// 9. Вывести в консоль 0-й элемент параметра salary из response.
+console.log(respJson.salary[0]);
+
+// 10. Вывести в консоль 1-й элемент параметра salary параметр salary из response.
+console.log(respJson.salary[1]);
+
+// 11. Вывести в консоль 2-й элемент параметра salary параметр salary из response.
+console.log(respJson.salary[2]);
+
+// 12. Проверить, что 0-й элемент параметра salary равен salary из request (salary забрать из request.)
+pm.test("check 0-element to be salary", () => {
+    pm.expect(respJson.salary[0]).to.eql(+reqJson.salary);
+});
+
+// 13. Проверить, что 1-й элемент параметра salary равен salary*2 из request (salary забрать из request.)
+pm.test("check 1-element to be salary*2", () => {
+    pm.expect(Number(respJson.salary[1])).to.eql(reqJson.salary*2);
+});
+
+// 14. Проверить, что 2-й элемент параметра salary равен salary*3 из request (salary забрать из request.)
+pm.test("check 2-element to be salary*3", () => {
+    pm.expect(Number(respJson.salary[2])).to.eql(reqJson.salary*3);
 });
 
