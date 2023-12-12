@@ -18,3 +18,43 @@ pm.test("Body contains string", function() {
     pm.expect(pm.response.text()).to.include("This is th");
 });
 
+==============================================================================
+2. POST   baseURL/user_info_3
+// 1. Отправить запрос.
+// 2. Статус код 200
+pm.test("Status code is 200", () => {
+    pm.response.to.have.status(200);
+});
+
+// 3. Спарсить response body в json.
+let respJson = pm.response.json();
+
+console.log(respJson);
+
+// 4. Проверить, что name в ответе равно name s request (name вбить руками.)
+pm.test("Check name matches to our name-from-request", () => {
+    pm.expect(respJson.name).to.eql("Ivan");
+});
+
+// 5. Проверить, что age в ответе равно age s request (age вбить руками.)
+pm.test("Check age", () => {
+    pm.expect(Number(respJson.age)).to.eql(35);
+})
+
+// 6. Проверить, что salary в ответе равно salary s request (salary вбить руками.)
+pm.test("Check salary", () => {
+    pm.expect(respJson.salary).to.eql(5200);
+});
+
+// 7. Спарсить request.
+let reqData = request.data;
+console.log(reqData);
+
+// 8. Проверить, что name в ответе равно name s request (name забрать из request.)
+pm.test("check name 2", () => {
+    pm.expect(respJson.name).to.eql(reqData.name);
+});
+console.log("1 - req-name ------- " + reqData.name);
+console.log(respJson.name);
+
+
