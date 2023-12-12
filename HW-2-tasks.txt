@@ -279,3 +279,28 @@ pm.test("check person present", () => {
     pm.expect(respJson).to.have.property("person");
 });
 
+// 14. Проверить, что параметр start_qa_salary равен salary из request (salary забрать из request.)
+pm.test("check start_qa_salary = request_salary", () => {
+    pm.expect(respJson.start_qa_salary).to.eql(+req.salary);
+});
+
+// 15. Проверить, что параметр qa_salary_after_6_months равен salary*2 из request (salary забрать из request.)
+pm.test("check qa_salary_after_6_months = request_salary*2", () => {
+    pm.expect(respJson.qa_salary_after_6_months).to.eql(+req.salary*2);
+});
+
+// 16. Проверить, что параметр qa_salary_after_12_months равен salary*2.7 из request (salary забрать из request.)
+pm.test("check qa_salary_after_12_months = request_salary*2.7", () => {
+    pm.expect(respJson.qa_salary_after_12_months).to.eql(+req.salary*2.7);
+});
+
+// 17. Проверить, что параметр qa_salary_after_1.5_year равен salary*3.3 из request (salary забрать из request.)
+pm.test("check qa_salary_after_1.5_year = request_salary*3.3", () => {
+    pm.expect(respJson["qa_salary_after_1.5_year"]).to.eql(+req.salary*3.3);
+});
+
+
+// 18. Проверить, что параметр qa_salary_after_3.5_years равен salary*3.8 из request (salary забрать из request.)
+pm.test("check qa_salary_after_3.5_years = request_salary*3.8", () => {
+    pm.expect(respJson["qa_salary_after_3.5_years"]).to.eql(+req.salary*3.8);
+});
