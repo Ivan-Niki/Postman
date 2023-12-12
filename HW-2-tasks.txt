@@ -1,0 +1,20 @@
+1. GET    baseURL/first
+// Проверить, что статус-код 200
+pm.test("Status is 200", () => {
+    pm.response.to.have.status(200);
+});
+
+
+
+// Проверить, что body ответа является нужной строкой
+pm.test("Body is certain string", function() {
+    pm.response.to.have.body("This is the first responce from server!ss");
+});
+
+
+
+// Проверить, что body ответа содержит часть строки
+pm.test("Body contains string", function() {
+    pm.expect(pm.response.text()).to.include("This is th");
+});
+
