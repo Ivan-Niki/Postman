@@ -57,4 +57,23 @@ pm.test("check name 2", () => {
 console.log("1 - req-name ------- " + reqData.name);
 console.log(respJson.name);
 
+// 9. Проверить, что age в ответе равно age s request (age забрать из request.)
+pm.test("check age 2", () => {
+    pm.expect(respJson.age).to.eql(reqData.age);
+});
+
+// 10. Проверить, что salary в ответе равно salary s request (salary забрать из request.)
+pm.test("check salary 2", () => {
+    pm.expect(respJson.salary).to.eql(Number(reqData.salary));
+});
+
+console.log(respJson.salary);
+
+// 11. Вывести в консоль параметр family из response.
+console.log(respJson.family);
+
+// 12. Проверить что u_salary_1_5_year в ответе равно salary*4 (salary забрать из request)
+pm.test("check u-salary_1.5_year", function() {
+    pm.expect(respJson.family.u_salary_1_5_year).to.eql(reqData.salary * 4);
+});
 
