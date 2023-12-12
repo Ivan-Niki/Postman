@@ -115,3 +115,26 @@ pm.test("check salary", () => {
     pm.expect(responseJson.salary).to.eql(+reqJson.salary);
 });
 
+// 8. Вывести в консоль параметр family из response.
+console.log(responseJson.family);
+
+// 9. Проверить, что у параметра dog есть параметры name.
+pm.test("check dog to have name", () => {
+    pm.expect(responseJson.family.pets.dog).to.have.property('name');
+});
+
+// 10. Проверить, что у параметра dog есть параметры age.
+pm.test("check dog to have age", () => {
+    pm.expect(responseJson.family.pets.dog).to.have.property("age");
+});
+
+// 11. Проверить, что параметр name имеет значение Luky.
+pm.test("check dog-name to be Luky", () => {
+    pm.expect(responseJson.family.pets.dog.name).to.eql("Luky");
+});
+
+// 12. Проверить, что параметр age имеет значение 4.
+pm.test("check dog-age to be 4", () => {
+    pm.expect(responseJson.family.pets.dog.age).to.eql(4);
+});
+
