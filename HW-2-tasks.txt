@@ -248,3 +248,34 @@ console.log(respJson);
 // 7. Спарсить request.
 let req = request.data;
 console.log(req);
+
+// 8. Проверить, что json response имеет параметр start_qa_salary
+pm.test("check start_qa_salary is present", () => {
+    pm.expect(respJson).to.have.property("start_qa_salary");
+});
+
+// 9. Проверить, что json response имеет параметр qa_salary_after_6_months
+pm.test("check start_qa_salary_after_6_months is present", () => {
+    pm.expect(respJson).to.have.property("qa_salary_after_6_months");
+});
+
+// 10. Проверить, что json response имеет параметр qa_salary_after_12_months
+pm.test("check start_qa_salary_after_12_months is present", () => {
+    pm.expect(respJson).to.have.property("qa_salary_after_12_months");
+});
+
+// 11. Проверить, что json response имеет параметр qa_salary_after_1.5_year
+pm.test("check start_qa_salary_after_1.5_year is present", () => {
+    pm.expect(respJson).to.have.property("qa_salary_after_1.5_year");
+});
+
+// 12. Проверить, что json response имеет параметр qa_salary_after_3.5_years
+pm.test("check start_qa_salary_after_3.5_year is present", () => {
+    pm.expect(respJson).to.have.property("qa_salary_after_3.5_years");
+});
+
+// 13. Проверить, что json response имеет параметр person
+pm.test("check person present", () => {
+    pm.expect(respJson).to.have.property("person");
+});
+
