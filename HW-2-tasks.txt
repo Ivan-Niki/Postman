@@ -4,14 +4,10 @@ pm.test("Status is 200", () => {
     pm.response.to.have.status(200);
 });
 
-
-
 // Проверить, что body ответа является нужной строкой
 pm.test("Body is certain string", function() {
     pm.response.to.have.body("This is the first responce from server!ss");
 });
-
-
 
 // Проверить, что body ответа содержит часть строки
 pm.test("Body contains string", function() {
@@ -22,6 +18,7 @@ pm.test("Body contains string", function() {
 2. POST   baseURL/user_info_3
 
 // 1. Отправить запрос.
+
 // 2. Статус код 200
 pm.test("Status code is 200", () => {
     pm.response.to.have.status(200);
@@ -30,7 +27,7 @@ pm.test("Status code is 200", () => {
 // 3. Спарсить response body в json.
 let respJson = pm.response.json();
 
-console.log(respJson);
+// проверяем ==> console.log(respJson);
 
 // 4. Проверить, что name в ответе равно name s request (name вбить руками.)
 pm.test("Check name matches to our name-from-request", () => {
@@ -40,7 +37,7 @@ pm.test("Check name matches to our name-from-request", () => {
 // 5. Проверить, что age в ответе равно age s request (age вбить руками.)
 pm.test("Check age", () => {
     pm.expect(Number(respJson.age)).to.eql(35);
-})
+});
 
 // 6. Проверить, что salary в ответе равно salary s request (salary вбить руками.)
 pm.test("Check salary", () => {
@@ -49,14 +46,16 @@ pm.test("Check salary", () => {
 
 // 7. Спарсить request.
 let reqData = request.data;
-console.log(reqData);
 
-// 8. Проверить, что name в ответе равно name s request (name забрать из request.)
+// проверяем ==> console.log(reqData);
+
+// 8. Проверить, что name в ответе равно name в request (name забрать из request.)
 pm.test("check name 2", () => {
     pm.expect(respJson.name).to.eql(reqData.name);
 });
-console.log("1 - req-name ------- " + reqData.name);
-console.log(respJson.name);
+
+console.log("request-name ------- " + reqData.name);
+console.log("response-name ------- " + respJson.name);
 
 // 9. Проверить, что age в ответе равно age s request (age забрать из request.)
 pm.test("check age 2", () => {
@@ -84,6 +83,7 @@ pm.test("check u-salary_1.5_year", function() {
 3. GET   baseURL/object_info_3
 
 // 1. Отправить запрос.
+
 // 2. Статус код 200
 pm.test("status is 200", () => {
     pm.response.to.have.status(200);
@@ -107,8 +107,8 @@ pm.test("check name", () => {
 pm.test("check age", () => {
     pm.expect(responseJson.age).to.eql(reqJson.age);
 });
-//console.log(typeof responseJson.age);
-//console.log(typeof reqJson.age);
+// console.log(typeof responseJson.age);
+// console.log(typeof reqJson.age);
 
 // 7. Проверить, что salary в ответе равно salary s request (salary забрать из request.)
 pm.test("check salary", () => {
