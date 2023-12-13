@@ -119,3 +119,32 @@ pm.test("Schema is OK", () => {
 });
 
 
+// 3) В ответе указаны коэффициенты умножения salary, напишите тесты по проверке 
+// правильности результата перемножения на коэффициент.
+
+// Парсим response
+let jsonRespData = pm.response.json();           
+// let jsonRespData = JSON.parse(responseBody);  === 2nd way to parse response data
+
+// Парсим request из request-body raw
+let jsonReqData = JSON.parse(pm.request.body.raw);
+
+// Тесты по проверке правильности перемножения:
+pm.test("Check salary after_6_months", function () {
+    pm.expect(jsonRespData.qa_salary_after_6_months).to.eql(jsonReqData.salary*2);
+});
+
+pm.test("Check salary after_12_months", function () {
+    pm.expect(jsonRespData.qa_salary_after_12_months).to.eql(jsonReqData.salary*2.9);
+});
+
+pm.test("Check u_salary_1_5_year", function () {
+    pm.expect(jsonRespData.person.u_salary_1_5_year).to.eql(jsonReqData.salary*4);
+});
+
+
+// 4) Достать значение из поля 'u_salary_1.5_year' и передать в поле salary запроса baseURL/get_test_user
+pm.environment.set("1_5_year_salary", jsonRespData.person.u_salary_1_5_year);  //устанавливаем переменную окружения;
+// - проверяем, что в окружении появилась переменная с названием 1_5_year_salary и соответствующим значением
+// - в поле salary запроса ".../get_test_user" вводим {{1_5_year_salary}}
+
