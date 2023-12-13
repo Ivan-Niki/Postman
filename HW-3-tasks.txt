@@ -230,10 +230,24 @@ pm.test("Check salary[2] is request-salary*3", function () {
 
 pm.test("Check salary[2] is bigger than salary[1]", function () {
      pm.expect(+jsonData.salary[2]).to.be.above(+jsonData.salary[1]);
+     
 });
 
 pm.test("Check salary[2] is bigger than salary[0]", function () {
-    pm.expect(+jsonData.salary[2]).to.be.above(jsonData.salary[0]);
+    pm.expect(+jsonData.salary[2]).to.be.above(+jsonData.salary[0]);
+});
+
+// То же самое можно сделать в одном тесте (два выражения в одной тестовой функции):
+pm.test("Check salary[2] is bigger", function () {
+    pm.expect(+jsonData.salary[2]).to.be.above(+jsonData.salary[0]);
+    pm.expect(+jsonData.salary[2]).to.be.above(+jsonData.salary[1]);
+});
+
+
+// 2nd version ( using greaterThan() ):
+pm.test("Check salary[2] is big", function () {
+    pm.expect(+jsonData.salary[2]).to.be.greaterThan(+jsonData.salary[0]);
+    pm.expect(+jsonData.salary[2]).to.be.greaterThan(+jsonData.salary[1]);
 });
 
 ========================================================================
