@@ -270,37 +270,35 @@ pm.test("Object is contained", () => {
 
 
 
+------------- Проверка структуры ответа -------------
+Вы можете выполнить проверку схемы JSON с помощью tv4
+Примечание: Tiny Validator (for v4 JSON Schema), устарел, выдает общий статус проверки.
+
+const schema = {
+ "items": {
+ "type": "boolean"
+ }
+};
+const data1 = [true, false];
+const data2 = [true, 123];
+
+pm.test('Schema is valid', function() {
+  pm.expect(tv4.validate(data1, schema)).to.be.true;
+  pm.expect(tv4.validate(data2, schema)).to.be.true;
+});
+
+Вы также можете проверить схему JSON с помощью ajv по умолчанию.
+
+const schema = {
+  "properties": {
+    "alpha": {
+      "type": "boolean"
+    }
+  }
+};
+pm.test('Schema is valid', function() {
+  pm.response.to.have.jsonSchema(schema);
+});
 
 
 
-
-
-Language Chains
-The following are provided as chainable getters to improve the readability of your assertions.
-
-Chains
-
-to
-be
-been
-is
-that
-which
-and
-has
-have
-with
-at
-of
-same
-but
-does
-still
-also
-.not
-Negates all assertions that follow in the chain.
-
-expect(function () {}).to.not.throw();
-expect({a: 1}).to.not.have.property('b');
-expect([1, 2]).to.be.an('array').that.does.not.include(3);
-Just because you can negate any assertion with .not doesn’t mean you should. With great power comes great responsibility. It’s often best to assert that the one expected output was produced, rather than asserting that one of countless unexpected outputs wasn’t produced. See individual assertions for specific guidance.
