@@ -241,6 +241,46 @@ pm.test("Value is in valid list", () => {
 });
 
 
+---------- Проверка, что значение массива salary БОЛЬШЕ, чем 1-е и 0-е значения этого массива:
+--> 1) С помощью above():
+pm.test("Check salary[2] is bigger than salary[1]", function () {
+     pm.expect(+jsonData.salary[2]).to.be.above(+jsonData.salary[1]);
+     
+});
+
+pm.test("Check salary[2] is bigger than salary[0]", function () {
+    pm.expect(+jsonData.salary[2]).to.be.above(+jsonData.salary[0]);
+});
+
+--- или можно объединить два выражения в одну проверку:
+pm.test("Check salary[2] is bigger", function () {
+    pm.expect(+jsonData.salary[2]).to.be.above(+jsonData.salary[0]);
+    pm.expect(+jsonData.salary[2]).to.be.above(+jsonData.salary[1]);
+});
+
+
+--> 2) С помощью greaterThan(): 
+pm.test("Check salary[2] is big", function () {
+    pm.expect(+jsonData.salary[2]).to.be.greaterThan(+jsonData.salary[0]);
+    pm.expect(+jsonData.salary[2]).to.be.greaterThan(+jsonData.salary[1]);
+});
+
+
+
+--------- Аналогичные выражения для проверки, что значение МЕНЬШЕ другого указанного значения
+--> 1) С помощью below():
+pm.test("Check salary[0] is smaller than salary[2]", function () {
+    pm.expect(+jsonData.salary[0]).to.be.below(+jsonData.salary[0]);
+});
+
+--> 2) С помощью lessThan(): 
+pm.test("Check salary[2] is big2", function () {
+    pm.expect(+jsonData.salary[2]).to.be.lessThan((+jsonData.salary[1]) + (+jsonData.salary[0]) + 1);
+});
+
+
+
+
 
 ------- Проверка, что объект является частью родительского объекта -------
 /* Response has the following structure:
@@ -286,6 +326,7 @@ pm.test('Schema is valid', function() {
   pm.expect(tv4.validate(data1, schema)).to.be.true;
   pm.expect(tv4.validate(data2, schema)).to.be.true;
 });
+
 
 Вы также можете проверить схему JSON с помощью ajv по умолчанию.
 
