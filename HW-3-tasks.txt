@@ -148,3 +148,91 @@ pm.environment.set("1_5_year_salary", jsonRespData.person.u_salary_1_5_year);  /
 // - проверяем, что в окружении появилась переменная с названием 1_5_year_salary и соответствующим значением
 // - в поле salary запроса ".../get_test_user" вводим {{1_5_year_salary}}
 
+=====================================================================================
+
+// 3) baseURL/new_data
+// req.
+// POST
+// age: int
+// salary: int
+// name: str
+// auth_token
+
+// Resp.
+// {'name':name,
+//   'age': int(age),
+//   'salary': [salary, str(salary*2), str(salary*3)]}
+
+// Тесты:
+
+// 1) Статус код 200
+pm.test("Status code is 200", function () {
+    pm.response.to.have.status(200);
+});
+
+
+    let jsonData = pm.response.json();
+    let reqData = request.data;
+    //console.log(+reqData.salary);
+
+// 2) Проверка структуры json в ответе.
+
+let schema = {
+  "type": "object",
+  "properties": {
+    "age": {
+      "type": "integer"
+    },
+    "name": {
+      "type": "string"
+    },
+    "salary": {
+      "type": "array",
+      "items": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "string"
+        }
+      ]
+    }
+  },
+  "required": [
+    "age",
+    "name",
+    "salary"
+  ]
+};
+
+let data1 = jsonData;
+
+pm.test('Schema is valid', function () {
+    pm.expect(tv4.validate(data1, schema)).to.be.true;
+});
+
+// 3) В ответе указаны коэффициенты умножения salary, напишите тесты по проверке 
+// правильности результата перемножения на коэффициент.
+pm.test("Check salary[1] is request-salary*2", function () {
+    pm.expect(+jsonData.salary[1]).to.eql(reqData.salary*2);
+});
+
+pm.test("Check salary[2] is request-salary*3", function () {
+    pm.expect(+jsonData.salary[2]).to.eql(reqData.salary*3);
+});
+
+//console.log(reqData.salary/2);
+
+// 4) проверить, что 2-й элемент массива salary больше 1-го и 0-го
+
+pm.test("Check salary[2] is bigger than salary[1]", function () {
+     pm.expect(+jsonData.salary[2]).to.be.above(+jsonData.salary[1]);
+});
+
+pm.test("Check salary[2] is bigger than salary[0]", function () {
+    pm.expect(+jsonData.salary[2]).to.be.above(jsonData.salary[0]);
+});
+
