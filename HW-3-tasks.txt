@@ -236,3 +236,78 @@ pm.test("Check salary[2] is bigger than salary[0]", function () {
     pm.expect(+jsonData.salary[2]).to.be.above(jsonData.salary[0]);
 });
 
+========================================================================
+
+// 4) baseURL/test_pet_info
+// req.
+// POST
+// age: int
+// weight: int
+// name: str
+// auth_token
+
+
+// Resp.
+// {'name': name,
+//  'age': age,
+//  'daily_food':weight * 0.012,
+//  'daily_sleep': weight * 2.5}
+
+
+// Тесты:
+// 1) Статус код 200
+pm.test("Status code is 200", function () {
+    pm.response.to.have.status(200);
+});
+
+
+// 2) Проверка структуры json в ответе.
+let jsonData = pm.response.json();
+
+var schema = {
+  "type": "object",
+  "properties": {
+    "age": {
+      "type": "integer"
+    },
+    "daily_food": {
+      "type": "number"
+    },
+    "daily_sleep": {
+      "type": "number"
+    },
+    "name": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "age",
+    "daily_food",
+    "daily_sleep",
+    "name"
+  ]
+};
+
+var data1 = jsonData;
+
+pm.test('Schema is valid', function () {
+    pm.expect(tv4.validate(data1, schema)).to.be.true;
+});
+
+
+// 3) В ответе указаны коэффициенты умножения weight, напишите тесты по проверке 
+// правильности результата перемножения на коэффициент.
+
+let reqData = request.data;
+
+//console.log(reqData.weight);
+
+pm.test("Check daily_food is weight *0.012", function () {
+    pm.expect(jsonData.daily_food).to.eql(reqData.weight*0.012);
+});
+
+pm.test("Check daily_sleep is weight *0.012", function () {
+    pm.expect(jsonData.daily_sleep).to.eql(reqData.weight*2.5);
+});
+
+======================================================================
