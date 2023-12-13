@@ -137,6 +137,12 @@ pm.test("Status code name has string", () => {
   pm.response.to.have.status("Created");
 });
 
+----- Тест для проверки, что код состояния НЕ 404 (или какой-либо другой)
+pm.test("the endpoint does not return unexpected status code", () => {
+  pm.response.to.not.have.status(404);
+});
+
+
 
 -------------- Проверка наличия заголовка (хэдера) ответа -------------
 pm.test("Content-Type header is present", () => {
