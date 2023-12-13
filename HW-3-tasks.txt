@@ -311,3 +311,110 @@ pm.test("Check daily_sleep is weight *0.012", function () {
 });
 
 ======================================================================
+
+// 5) baseURL/get_test_user
+
+// req.
+// POST
+// age: int
+// salary: int
+// name: str
+// auth_token
+
+// Resp.
+// {'name': name,
+//  'age':age,
+//  'salary': salary,
+//  'family':{'children':[['Alex', 24],['Kate', 12]],
+//  'u_salary_1.5_year': salary * 4}
+//   }
+
+// Тесты:
+// 1) Статус код 200
+pm.test("Status code is 200", function () {
+    pm.response.to.have.status(200);
+});
+
+// Парсим реквест и респонс:
+let jsonData = pm.response.json();
+let reqData = request.data;
+//console.log(reqData.name);
+
+
+// 2) Проверка структуры json в ответе.
+let schema = {
+  "type": "object",
+  "properties": {
+    "age": {
+      "type": "string"
+    },
+    "family": {
+      "type": "object",
+      "properties": {
+        "children": {
+          "type": "array",
+          "items": [
+            {
+              "type": "array",
+              "items": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            {
+              "type": "array",
+              "items": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            }
+          ]
+        },
+        "u_salary_1_5_year": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "children",
+        "u_salary_1_5_year"
+      ]
+    },
+    "name": {
+      "type": "string"
+    },
+    "salary": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "age",
+    "family",
+    "name",
+    "salary"
+  ]
+};
+
+pm.test('Schema is valid', function () {
+    pm.expect(tv4.validate(jsonData, schema)).to.be.true;
+});
+
+
+// 3) Проверить что занчение поля name = значению переменной name из окружения
+// console.log(pm.environment.get("name"));
+
+pm.test("Check response-name matches to environment-variable-name", function () {
+    pm.expect(jsonData.name).to.eql(pm.environment.get("name"));
+});
+
+// 4) Проверить что занчение поля age в ответе соответсвует отправленному в запросе значению поля age
+pm.test("Check resp-age matches to req-age", function () {
+    pm.expect(jsonData.age).to.eql(reqData.age);
+});
