@@ -176,15 +176,28 @@ pm.test("Response time is less than 200ms", () => {
 });
 
 
-============= Примеры распространённых утверждений ==============
+============= Примеры распространённых проверок ==============
 Мы можем проверить, имеет ли свойство ответа то же значение, что и переменная (в этом примере используется переменная среды):
 pm.test("Response property matches environment variable", function () {
   pm.expect(pm.response.json().name).to.eql(pm.environment.get("name"));
 });
 
 
+-------- Сверка значения ответа со списком допустимых параметров --------
+/* Ответ (Response) имеет следующую структуру:
+{
+  "type": "Subscriber"
+},
+*/
 
------ Проверка типа данных любой части ответа -----
+pm.test("Value is in valid list", () => {
+  pm.expect(pm.response.json().type)
+    .to.be.oneOf(["Subscriber", "Customer", "User"]);
+});
+
+
+
+---------- Проверка типа данных любой части ответа ----------
 
 /* Ответ (Response) имеет следующую структуру:
 {
@@ -209,8 +222,8 @@ pm.test("Test data type of the response", () => {
 
 
 
-------------- Проверка, что объект содержит ключи или свойства --------------
-/* Response has the following structure:
+------------- Проверка, что ОБЪЕКТ содержит ключи или свойства --------------
+/* Ответ (Response) имеет следующую структуру:
 {
   "a": 1,
   "b": 2
@@ -228,18 +241,43 @@ pm.expect({a: 1, b: 2}).to.be.an('object')
 Поскольку поведение .keys варьируется в зависимости от типа данных цели, рекомендуется проверять тип перед использованием .keys с .a;
 
 
--------- Сверка значения ответа со списком допустимых параметров --------
+--------- Проверка, что ОБЪЕКТ является частью родительского объекта ---------
 /* Response has the following structure:
 {
-  "type": "Subscriber"
+  "id": "d8893057-3e91-4cdd-a36f-a0af460b6373",
+  "created": true,
+  "errors": []
 },
 */
 
-pm.test("Value is in valid list", () => {
-  pm.expect(pm.response.json().type)
-    .to.be.oneOf(["Subscriber", "Customer", "User"]);
+pm.test("Object is contained", () => {
+  const expectedObject = {
+    "created": true,
+    "errors": []
+  };
+  pm.expect(pm.response.json()).to.deep.include(expectedObject);
 });
 
+
+-------- Тест для проверки значения поля в ответе --------
+Мы можем подтвердить значение поля, например, поля id и поля name используя тест ниже.
+
+pm.test("API response contains the expected fields", () => {
+  const response = pm.response.json();
+  
+  // строка ниже проверяет, что значение поля id равно 2 (number).
+  pm.expect(response).to.have.property("id", 2);
+
+  // строка ниже проверяет, что значение поля name равно "Morty Smith" (string).
+  pm.expect(response).to.have.property("name", "Morty Smith");
+});
+
+
+
+
+
+
+======================= РАБОТА С МАССИВАМИ ======================
 
 ---------- Проверка, что значение массива salary БОЛЬШЕ, чем 1-е и 0-е значения этого массива:
 --> 1) С помощью above():
@@ -282,25 +320,6 @@ pm.test("Check salary[2] is big2", function () {
 
 
 
-------- Проверка, что объект является частью родительского объекта -------
-/* Response has the following structure:
-{
-  "id": "d8893057-3e91-4cdd-a36f-a0af460b6373",
-  "created": true,
-  "errors": []
-},
-*/
-
-pm.test("Object is contained", () => {
-  const expectedObject = {
-    "created": true,
-    "errors": []
-  };
-  pm.expect(pm.response.json()).to.deep.include(expectedObject);
-});
-
-
-
 
 
 
@@ -328,7 +347,7 @@ pm.test('Schema is valid', function() {
 });
 
 
-Вы также можете проверить схему JSON с помощью ajv по умолчанию.
+------- Также мы можем проверить схему JSON с помощью ajv по умолчанию -------
 
 const schema = {
   "properties": {
