@@ -273,7 +273,16 @@ pm.test("API response contains the expected fields", () => {
 });
 
 
-
+-------- Тест для проверки значения вложенного поля в ответе --------
+Вышеприведенный сценарий работает для полей (ключей) в корне ответа.
+Что, если мы хотим проверить поле name под корневым (начальным) уровнем? 
+Мы можем настроить сценарий для работы с полями на любом уровне.
+pm.test("API response contains the expected fields", () => {
+  const response = pm.response.json();
+  
+  // строка ниже проверяет, что значение поля origin.name равно "Earth (C-137)" (string).
+  pm.expect(response).to.have.nested.property("origin.name", "Earth (C-137)");
+});
 
 
 
