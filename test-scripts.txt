@@ -277,9 +277,9 @@ pm.test("API response contains the expected fields", () => {
 Вышеприведенный сценарий работает для полей (ключей) в корне ответа.
 Что, если мы хотим проверить поле name под корневым (начальным) уровнем? 
 Мы можем настроить сценарий для работы с полями на любом уровне.
+
 pm.test("API response contains the expected fields", () => {
   const response = pm.response.json();
-  
   // строка ниже проверяет, что значение поля origin.name равно "Earth (C-137)" (string).
   pm.expect(response).to.have.nested.property("origin.name", "Earth (C-137)");
 });
@@ -291,8 +291,8 @@ pm.test("API response contains the expected fields", () => {
 ---------- Проверка, что значение массива salary БОЛЬШЕ, чем 1-е и 0-е значения этого массива:
 --> 1) С помощью above():
 pm.test("Check salary[2] is bigger than salary[1]", function () {
-     pm.expect(+jsonData.salary[2]).to.be.above(+jsonData.salary[1]);
-     
+    pm.expect(+jsonData.salary[2]).to.be.above(+jsonData.salary[1]);
+
 });
 
 pm.test("Check salary[2] is bigger than salary[0]", function () {
@@ -325,6 +325,45 @@ pm.test("Check salary[2] is big2", function () {
     pm.expect(+jsonData.salary[2]).to.be.lessThan((+jsonData.salary[1]) + (+jsonData.salary[0]) + 1);
 });
 
+
+
+--------- Проверки на то, является ли массив пустым и содержит ли он определенные элементы -------
+/* Ответ имеет следующую структуру:
+{
+  "errors": [],
+  "areas": [ "goods", "services" ],
+  "settings": [
+    {
+      "type": "notification",
+      "detail": [ "email", "sms" ]
+    },
+    {
+      "type": "visual",
+      "detail": [ "light", "large" ]
+    }
+  ]
+},
+*/
+
+const jsonData = pm.response.json();
+
+pm.test("Test array properties", () => {
+    //массив errors является пустым
+  pm.expect(jsonData.errors).to.be.empty;
+  
+    //массив areas включает в себя элемент "goods"
+  pm.expect(jsonData.areas).to.include("goods");
+  
+    //получить объект со значением "notification" в свойстве "type" из массива объектов "settings"
+  const notificationSettings = jsonData.settings.find(elem => elem.type === "notification");
+	pm.expect(notificationSettings).to.be.an("object", "Could not find the setting");
+    
+	//массив detail должен включать в себя элемент "sms"
+  pm.expect(notificationSettings.detail).to.include("sms");
+    
+	//массив detail должен включать в себя элемент все элементы из указанного списка
+  pm.expect(notificationSettings.detail).to.have.members(["email", "sms"]);
+});
 
 
 
