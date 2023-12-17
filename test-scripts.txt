@@ -430,3 +430,9 @@ pm.collectionVariables.get("variable_key");
 // получить доступ к переменной окружения
 pm.environment.get("variable_key");
 
+
+--------- Установка переменных окружения с помощью скриптов ----------
+Можно изменить значения переменных окружения с помощью Pre-request Script и Tests scripts.
+Используйте метод pm.environment чтобы установить переменную окружения в активном окружении. 
+Например:
+pm.environment.set("variable_key", "variable_value");
