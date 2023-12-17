@@ -191,8 +191,7 @@ pm.test("Response property matches environment variable", function () {
 */
 
 pm.test("Value is in valid list", () => {
-  pm.expect(pm.response.json().type)
-    .to.be.oneOf(["Subscriber", "Customer", "User"]);
+  pm.expect(pm.response.json().type).to.be.oneOf(["Subscriber", "Customer", "User"]);
 });
 
 
@@ -366,8 +365,10 @@ pm.test("Test array properties", () => {
 });
 
 
-
-
+---------- Проверка активного окружения в Postman: ----------
+pm.test("Check the active environment", () => {
+  pm.expect(pm.environment.name).to.eql("Production");
+});
 
 
 
@@ -395,7 +396,7 @@ pm.test('Schema is valid', function() {
 });
 
 
-------- Также мы можем проверить схему JSON с помощью ajv по умолчанию -------
+------- Также мы можем проверить схему JSON с помощью ajv JSON schema validator -------
 
 const schema = {
   "properties": {
@@ -409,4 +410,23 @@ pm.test('Schema is valid', function() {
 });
 
 
+Можно также тестировать переменные окружения, как в следующем примере:
+pm.test("environment to be production", function () {
+    pm.expect(pm.environment.get("env")).to.equal("production");
+});
+
+Вы можете получить текущее значение переменной в скриптах, используя объект, 
+отражающий область (scope) переменнойи метод get.
+
+// получить доступ к переменной в любой области, включая локальную
+pm.variables.get("variable_key");
+
+// получить доступ к глобальной переменной
+pm.globals.get("variable_key");
+
+// получить доступ к переменной коллекции
+pm.collectionVariables.get("variable_key");
+
+// получить доступ к переменной окружения
+pm.environment.get("variable_key");
 
