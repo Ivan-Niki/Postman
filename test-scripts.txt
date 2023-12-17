@@ -410,7 +410,7 @@ pm.test('Schema is valid', function() {
 });
 
 
-Можно также тестировать переменные окружения, как в следующем примере:
+--------- Можно также тестировать переменные окружения, как в следующем примере:
 pm.test("environment to be production", function () {
     pm.expect(pm.environment.get("env")).to.equal("production");
 });
@@ -436,3 +436,7 @@ pm.environment.get("variable_key");
 Используйте метод pm.environment чтобы установить переменную окружения в активном окружении. 
 Например:
 pm.environment.set("variable_key", "variable_value");
+
+
+Для удаления переменной мы можем использовать unset .
+pm.environment.unset("variable_key");
