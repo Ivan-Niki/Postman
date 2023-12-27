@@ -26,3 +26,16 @@ Newman - это command-line Collection Runner for Postman.
 Например:
 --> newman run HW-2-group-36.postman_collection.json -e HW-group-36.postman_environment.json
 
+
+-------------------------------------------------------------------------------------------
+Вариант через url (ссылку) на коллекцию:
+Если нажать share то мы попадаем можем сгенерировать ссылку на нашу коллекцию и запускать тесты через нее.
+Итак, нам нужно получить URL нашей коллекции. Как это делается: напротив нужной коллекции в Postman нужно 
+нажать на кнопку опций (…) и выбрать пункт “Share collection”.
+После этого откроется окно шаринга, в нём нужно перейти на вкладку Via API и там скопировать сгенерированную
+ссылку (Copy Postman API URL) на выбранную коллекцию (которая будет содержать в себе все прописанные тесты).
+Теперь запускаем тесты в консоли командой newman run. Синтаксис команды следующий:
+--> newman run <collection-URL> [options]
+
+$ newman run https://api.postman.com/collections/18073852-4dfa9039-9074-4eff-b9eb-6bc76b4ea3be?access_key=PMAT-01HHJMFWYGVQR6EAP6Z390Y71Q --environment HW-group-36.postman_environment.json
+
